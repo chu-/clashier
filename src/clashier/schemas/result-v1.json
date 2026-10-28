@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CLI result v1",
+  "type": "object",
+  "required": ["schema_version", "ok", "data", "error", "context", "meta"],
+  "properties": {
+    "schema_version": {"const": "1"},
+    "ok": {"type": "boolean"},
+    "data": {},
+    "error": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["code", "message", "safe_to_retry", "needs_reconcile", "details"],
+          "properties": {
+            "code": {"type": "string"},
+            "message": {"type": "string"},
+            "safe_to_retry": {"type": "boolean"},
+            "needs_reconcile": {"type": "boolean"},
+            "details": {"type": "object"}
+          }
+        }
+      ]
+    },
+    "context": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["instance_id", "profile_uid", "source", "observed_at"],
+          "properties": {
+            "instance_id": {"type": "string"},
+            "profile_uid": {"type": ["string", "null"]},
+            "source": {"enum": ["live", "configured"]},
+            "observed_at": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "meta": {
+      "type": "object",
+      "required": ["request_id", "duration_ms"],
+      "properties": {
+        "request_id": {"type": "string"},
+        "duration_ms": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"ok": {"const": true}}}, "then": {"properties": {"error": {"type": "null"}}}},
+    {"if": {"properties": {"ok": {"const": false}}}, "then": {"properties": {"error": {"type": "object"}}}}
+  ]
+}

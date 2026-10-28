@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Live nodes, group choices or declared profile nodes",
+  "type": "object",
+  "required": ["group", "selected", "type", "writable", "items"],
+  "properties": {
+    "group": {"type": ["string", "null"]},
+    "selected": {"type": ["string", "null"]},
+    "type": {"type": "string"},
+    "writable": {"type": "boolean"},
+    "mode": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string"},
+          "type": {"type": "string"},
+          "groups": {
+            "description": "Groups listing this node directly among their candidates.",
+            "type": "array", "items": {"type": "string"}
+          },
+          "selected_in": {
+            "description": "Groups directly selecting this node; this does not identify traffic routing.",
+            "type": "array", "items": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}

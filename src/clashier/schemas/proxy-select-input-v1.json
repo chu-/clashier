@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Select one proxy",
+  "type": "object",
+  "required": ["group", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "group": {"type": "string", "minLength": 1},
+    "name": {"type": "string", "minLength": 1},
+    "persist": {"type": "boolean", "default": false},
+    "if_current": {"type": ["string", "null"]},
+    "context": {
+      "type": "object",
+      "required": ["instance_id", "profile_uid"],
+      "additionalProperties": false,
+      "properties": {
+        "instance_id": {"type": "string", "minLength": 1},
+        "profile_uid": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Single candidate measurement",
+  "type": "object",
+  "required": ["group", "name", "status", "latency_ms", "url"],
+  "properties": {
+    "group": {"type": "string"},
+    "name": {"type": "string"},
+    "status": {"enum": ["reachable", "timeout", "unreachable"]},
+    "latency_ms": {"type": ["integer", "null"], "minimum": 0},
+    "url": {"type": "string"}
+  }
+}

@@ -1,0 +1,1 @@
+"""Installed versioned CLI contracts."""

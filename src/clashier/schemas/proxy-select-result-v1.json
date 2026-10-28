@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proxy selection effect",
+  "type": "object",
+  "required": ["status", "changed", "group", "requested", "before", "after", "live_status", "persistence", "traffic_verification"],
+  "properties": {
+    "status": {"enum": ["applied", "unchanged", "partial", "unknown", "not_applied"]},
+    "changed": {"type": ["boolean", "null"]},
+    "group": {"type": "string"},
+    "requested": {"type": "string"},
+    "before": {"type": ["string", "null"]},
+    "after": {"type": ["string", "null"]},
+    "live_status": {"enum": ["verified", "not_applied", "unknown"]},
+    "persistence": {
+      "type": "object",
+      "required": ["requested", "status"],
+      "properties": {
+        "requested": {"type": "boolean"},
+        "status": {"enum": ["not_requested", "saved", "failed", "unknown", "unsupported"]},
+        "method": {"const": "client_restart"},
+        "gui_sync": {"const": "restarted"},
+        "client": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {"status": {"const": "ready"}}
+        },
+        "client_activation": {"type": "object"}
+      }
+    },
+    "traffic_verification": {"const": "not_performed"}
+  }
+}

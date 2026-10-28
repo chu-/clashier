@@ -1,0 +1,6 @@
+include README.md README.zh-CN.md CONTRIBUTING.md
+include clashier.py uv.lock
+include docs/install.md docs/agent-usage.md
+include skills/clashier/SKILL.md
+include examples/select-reachable.sh
+recursive-include tests *.py

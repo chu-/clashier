@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clashier"
+dynamic = ["version"]
+description = "Composable command line interface for Clash Verge (Rev) / mihomo"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "GPL-3.0" }
+maintainers = [{ name = "chu-" }]
+keywords = ["clash", "clash-verge", "mihomo", "proxy", "cli", "agent", "codex", "claude-code"]
+classifiers = [
+    "Development Status :: 0.8 Beta",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: Proxy Servers",
+]
+dependencies = [
+    "click>=8.0.0,<9.0.0",
+    "pyyaml>=6.0,<7.0",
+    "httpx>=0.27,<1",
+    "jsonschema>=4.18,<5",
+    "mini-racer>=0.12.4,<0.13",
+]
+
+[dependency-groups]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/chu-/clashier"
+Documentation = "https://github.com/chu-/clashier/blob/main/README.md"
+Issues = "https://github.com/chu-/clashier/issues"
+
+[project.scripts]
+clashier = "clashier.cli.main:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "clashier.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+clashier = ["schemas/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S"]
+ignore = [
+    "UP032",  # keep str.format for readability
+    "S101",   # assert in tests
+    "S603", "S607",  # subprocess calls are intentional (pkill/open/explorer)
+    "B904",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "B"]
